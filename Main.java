@@ -40,6 +40,36 @@ public class Main {
     static Scanner sc = new Scanner(System.in);
     static ArrayList<Product> stock = new ArrayList<>();
 
+    static void addProduct() {
+        System.out.print("Enter ID, Name, Price, Quantity: ");
+        int id = sc.nextInt();
+        String name = sc.next();
+        double price = sc.nextDouble();
+        int qty = sc.nextInt();
+
+        System.out.print("1.General  2.Grocery: ");
+        int type = sc.nextInt();
+
+        Product p;
+        if (type == 2)
+            p = new GroceryProduct(id, name, price, qty);
+        else
+            p = new GeneralProduct(id, name, price, qty);
+
+        stock.add(p);
+        System.out.println("Product added!");
+    }
+
+    static void viewStock() {
+        if (stock.isEmpty()) {
+            System.out.println("No products yet!");
+            return;
+        }
+        for (Product p : stock) {
+            System.out.println(p.getId() + " " + p.getName() + " Rs." + p.getPrice() + " qty:" + p.getQuantity());
+        }
+    }
+
     public static void main(String[] args) {
         int choice;
         do {
@@ -52,8 +82,8 @@ public class Main {
             choice = sc.nextInt();
 
             switch (choice) {
-                case 1: System.out.println("TODO"); break;
-                case 2: System.out.println("TODO"); break;
+                case 1: addProduct(); break;
+                case 2: viewStock(); break;
                 case 3: System.out.println("bye"); break;
                 default: System.out.println("Invalid choice!");
             }
