@@ -1,6 +1,13 @@
 
 import java.util.*;
 
+// Custom Exception
+class InsufficientStockException extends Exception {
+    InsufficientStockException(String msg) {
+        super(msg);
+    }
+}
+
 abstract class Product {
     private int id;
     private String name;
