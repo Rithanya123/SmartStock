@@ -29,8 +29,15 @@ class GeneralProduct extends Product {
     double getTax() { return 0.05; }
 }
 
+class GroceryProduct extends Product {
+    GroceryProduct(int id, String n, double p, int q) {
+        super(id, n, p, q);
+    }
+    double getTax() { return 0.0; }
+}
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("SmartStock");
+        System.out.println("SmartStock sys");
     }
 }
