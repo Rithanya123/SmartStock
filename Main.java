@@ -9,18 +9,16 @@ class InsufficientStockException extends Exception {
 }
 
 abstract class Product {
-    private int id;
+    private int id, quantity, minStock;
     private String name;
     private double price;
-    private int quantity;
-    private int minStock;
 
     Product(int id, String name, double price, int qty, int min) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.quantity = qty;
-        this.minStock = min;
+        quantity = qty;
+        minStock = min;
     }
 
     int getId() { return id; }
@@ -31,7 +29,7 @@ abstract class Product {
 
     abstract double getTax();
 
-    // smart restock suggestion
+    // Unique feature: Smart Restock
     int suggestRestock() {
         return Math.max(0, minStock - quantity);
     }
@@ -121,11 +119,32 @@ public class Main {
             System.out.println("No products available!");
             return;
         }
+
+        System.out.println("\n======= INVENTORY =======");
         for (Product p : stock) {
             System.out.println(p.getId() + " " + p.getName()
                 + " | Price: Rs." + p.getPrice()
                 + " | Quantity: " + p.getQuantity());
         }
+    }
+
+    // Option 3: Smart Restock Suggestion
+    static void restockAlert() {
+        System.out.println("\n======= RESTOCK ALERT =======");
+        boolean found = false;
+
+        for (Product p : stock) {
+            if (p.getQuantity() <= p.getMinStock()) {
+                found = true;
+                System.out.println("Product: " + p.getName());
+                System.out.println("Current Stock: " + p.getQuantity());
+                System.out.println("Suggested Reorder: "
+                    + p.suggestRestock() + " units");
+            }
+        }
+
+        if (!found)
+            System.out.println("All products have sufficient stock!");
     }
 
     public static void main(String[] args) {
@@ -134,7 +153,8 @@ public class Main {
             System.out.println("\n===== SMARTSTOCK =====");
             System.out.println("1. Add Product");
             System.out.println("2. View Inventory");
-            System.out.println("3. Exit");
+            System.out.println("3. Smart Restock Alert");
+            System.out.println("4. Exit");
             System.out.print("Enter choice: ");
 
             choice = sc.nextInt();
@@ -142,9 +162,10 @@ public class Main {
             switch (choice) {
                 case 1: addProduct(); break;
                 case 2: viewStock(); break;
-                case 3: System.out.println("Exiting..."); break;
+                case 3: restockAlert(); break;
+                case 4: System.out.println("Exiting..."); break;
                 default: System.out.println("Invalid choice!");
             }
-        } while (choice != 3);
+        } while (choice != 4);
     }
 }
