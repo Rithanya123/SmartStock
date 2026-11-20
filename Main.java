@@ -18,10 +18,19 @@ abstract class Product {
     String getName() { return name; }
     double getPrice() { return price; }
     int getQuantity() { return quantity; }
+
+    abstract double getTax();
+}
+
+class GeneralProduct extends Product {
+    GeneralProduct(int id, String n, double p, int q) {
+        super(id, n, p, q);
+    }
+    double getTax() { return 0.05; }
 }
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("SmartStock - work in progress");
+        System.out.println("SmartStock");
     }
 }
