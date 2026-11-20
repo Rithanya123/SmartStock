@@ -30,6 +30,11 @@ abstract class Product {
     int getMinStock() { return minStock; }
 
     abstract double getTax();
+
+    // smart restock suggestion
+    int suggestRestock() {
+        return Math.max(0, minStock - quantity);
+    }
 }
 
 class GeneralProduct extends Product {
