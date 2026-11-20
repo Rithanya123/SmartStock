@@ -37,7 +37,26 @@ class GroceryProduct extends Product {
 }
 
 public class Main {
+    static Scanner sc = new Scanner(System.in);
+    static ArrayList<Product> stock = new ArrayList<>();
+
     public static void main(String[] args) {
-        System.out.println("SmartStock sys");
+        int choice;
+        do {
+            System.out.println("\n===== SMARTSTOCK =====");
+            System.out.println("1. Add Product");
+            System.out.println("2. View Inventory");
+            System.out.println("3. Exit");
+            System.out.print("Enter choice: ");
+
+            choice = sc.nextInt();
+
+            switch (choice) {
+                case 1: System.out.println("TODO"); break;
+                case 2: System.out.println("TODO"); break;
+                case 3: System.out.println("bye"); break;
+                default: System.out.println("Invalid choice!");
+            }
+        } while (choice != 3);
     }
 }
