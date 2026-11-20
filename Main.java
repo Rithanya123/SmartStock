@@ -44,6 +44,20 @@ public class Main {
     static ArrayList<Product> stock = new ArrayList<>();
     static HashMap<Integer, Product> products = new HashMap<>();
 
+    // binary search by id
+    static Product search(int id) {
+        int l = 0, h = stock.size() - 1;
+        while (l <= h) {
+            int mid = (l + h) / 2;
+            if (stock.get(mid).getId() == id)
+                return stock.get(mid);
+            if (stock.get(mid).getId() < id)
+                l = mid + 1;
+            else h = mid - 1;
+        }
+        return null;
+    }
+
     // sorting by id
     static void sortStock() {
         for (int i = 1; i < stock.size(); i++) {
