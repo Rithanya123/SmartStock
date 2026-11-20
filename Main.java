@@ -39,6 +39,7 @@ class GroceryProduct extends Product {
 public class Main {
     static Scanner sc = new Scanner(System.in);
     static ArrayList<Product> stock = new ArrayList<>();
+    static HashMap<Integer, Product> products = new HashMap<>();
 
     static void addProduct() {
         System.out.print("Enter ID, Name, Price, Quantity: ");
@@ -46,6 +47,11 @@ public class Main {
         String name = sc.next();
         double price = sc.nextDouble();
         int qty = sc.nextInt();
+
+        if (products.containsKey(id)) {
+            System.out.println("product alredy exists!!");
+            return;
+        }
 
         System.out.print("1.General  2.Grocery: ");
         int type = sc.nextInt();
@@ -57,6 +63,7 @@ public class Main {
             p = new GeneralProduct(id, name, price, qty);
 
         stock.add(p);
+        products.put(id, p);
         System.out.println("Product added!");
     }
 
