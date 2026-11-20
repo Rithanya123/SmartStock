@@ -1,3 +1,4 @@
+// SmartStock Inventory System
 
 import java.util.*;
 
