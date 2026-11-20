@@ -79,40 +79,47 @@ public class Main {
     }
 
     static void addProduct() {
-        System.out.print("Enter ID, Name, Price, Quantity, Min Stock: ");
-        int id = sc.nextInt();
-        String name = sc.next();
-        double price = sc.nextDouble();
-        int qty = sc.nextInt();
-        int min = sc.nextInt();
+        try {
+            System.out.print("Enter ID, Name, Price, Quantity, Min Stock: ");
+            int id = sc.nextInt();
+            String name = sc.next();
+            double price = sc.nextDouble();
+            int qty = sc.nextInt(), min = sc.nextInt();
 
-        if (products.containsKey(id)) {
-            System.out.println("product alredy exists!!");
-            return;
+            if (products.containsKey(id) || id <= 0 ||
+                price <= 0 || qty < 0 || min < 0)
+                throw new IllegalArgumentException("Invalid or duplicate product!");
+
+            System.out.print("1.General  2.Grocery: ");
+            int type = sc.nextInt();
+
+            if (type != 1 && type != 2)
+                throw new IllegalArgumentException("Invalid product type!");
+
+            Product p = type == 2
+                ? new GroceryProduct(id, name, price, qty, min)
+                : new GeneralProduct(id, name, price, qty, min);
+
+            stock.add(p);
+            products.put(id, p);
+            sortStock();
+
+            System.out.println("Product added successfully!");
+
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
         }
-
-        System.out.print("1.General  2.Grocery: ");
-        int type = sc.nextInt();
-
-        Product p;
-        if (type == 2)
-            p = new GroceryProduct(id, name, price, qty, min);
-        else
-            p = new GeneralProduct(id, name, price, qty, min);
-
-        stock.add(p);
-        products.put(id, p);
-        sortStock();
-        System.out.println("Product added!");
     }
 
     static void viewStock() {
         if (stock.isEmpty()) {
-            System.out.println("No products yet!");
+            System.out.println("No products available!");
             return;
         }
         for (Product p : stock) {
-            System.out.println(p.getId() + " " + p.getName() + " Rs." + p.getPrice() + " qty:" + p.getQuantity());
+            System.out.println(p.getId() + " " + p.getName()
+                + " | Price: Rs." + p.getPrice()
+                + " | Quantity: " + p.getQuantity());
         }
     }
 
@@ -130,7 +137,7 @@ public class Main {
             switch (choice) {
                 case 1: addProduct(); break;
                 case 2: viewStock(); break;
-                case 3: System.out.println("bye"); break;
+                case 3: System.out.println("Exiting..."); break;
                 default: System.out.println("Invalid choice!");
             }
         } while (choice != 3);
